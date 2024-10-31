@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://vme05bnt3m7w"]
+[gd_scene load_steps=16 format=4 uid="uid://vme05bnt3m7w"]
 
 [ext_resource type="Script" path="res://scripts/gameManager_script.gd" id="1_ivlrt"]
 [ext_resource type="PackedScene" uid="uid://dayj1s2qpm4rv" path="res://scenes/player.tscn" id="1_qtopu"]
@@ -9,12 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://b6l1ckuevgkfx" path="res://scenes/coin.tscn" id="4_tbgwk"]
 [ext_resource type="PackedScene" uid="uid://d00i1cvod17l3" path="res://scenes/deathzone.tscn" id="5_ckq0k"]
 [ext_resource type="PackedScene" uid="uid://1wjwb10oigv1" path="res://scenes/greenSlime.tscn" id="6_v40xx"]
-
-[sub_resource type="GDScript" id="GDScript_n8h5k"]
-script/source = "extends Label
-
-
-"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jqu0c"]
 texture = ExtResource("2_ef585")
@@ -236,8 +230,8 @@ offset_right = -70.0
 offset_bottom = -50.0
 theme_override_fonts/font = ExtResource("4_qvvoc")
 theme_override_font_sizes/font_size = 8
-text = "Coins: 0"
-script = SubResource("GDScript_n8h5k")
+text = "Coins: 0
+HP: 10"
 
 [node name="deathDialogue" type="AcceptDialog" parent="gameManager"]
 unique_name_in_owner = true
@@ -305,7 +299,10 @@ autoplay = "move"
 [node name="slimes" type="Node" parent="."]
 
 [node name="greenSlime" parent="slimes" instance=ExtResource("6_v40xx")]
-position = Vector2(248, -44)
+position = Vector2(72, 4)
 
 [connection signal="about_to_popup" from="gameManager/deathDialogue" to="gameManager/deathDialogue" method="_on_about_to_popup"]
 [connection signal="confirmed" from="gameManager/deathDialogue" to="gameManager/deathDialogue" method="_on_confirmed"]
+[connection signal="curr_hp" from="player" to="gameManager" method="_on_player_curr_hp"]
+[connection signal="dead" from="player" to="gameManager/deathDialogue" method="_on_player_dead"]
+[connection signal="decrease_hp" from="slimes/greenSlime" to="player" method="_on_green_slime_decrease_hp"]

@@ -23,10 +23,6 @@ region = Rect2(96, 224, 32, 32)
 atlas = ExtResource("1_6upw4")
 region = Rect2(64, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_28gjh"]
-atlas = ExtResource("1_6upw4")
-region = Rect2(0, 192, 32, 32)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_rthmr"]
 atlas = ExtResource("1_6upw4")
 region = Rect2(32, 192, 32, 32)
@@ -38,6 +34,10 @@ region = Rect2(64, 192, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ka4y8"]
 atlas = ExtResource("1_6upw4")
 region = Rect2(96, 192, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_28gjh"]
+atlas = ExtResource("1_6upw4")
+region = Rect2(0, 192, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mrut6"]
 atlas = ExtResource("1_6upw4")
@@ -182,7 +182,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ks1ar")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
 "speed": 10.0
 }, {
@@ -196,9 +196,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_28gjh")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_rthmr")
 }, {
 "duration": 1.0,
@@ -206,8 +203,11 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ka4y8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_28gjh")
 }],
-"loop": true,
+"loop": false,
 "name": &"hit",
 "speed": 10.0
 }, {
@@ -325,7 +325,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"run",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0t6up"]
@@ -337,11 +337,15 @@ script = ExtResource("1_oeb73")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_4dycp")
-animation = &"fall_down"
+animation = &"hit"
 autoplay = "idle"
-frame_progress = 0.404061
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 7)
 scale = Vector2(0.5, 0.5)
 shape = SubResource("CircleShape2D_0t6up")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
